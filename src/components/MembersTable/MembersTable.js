@@ -2,6 +2,7 @@ import React from "react";
 import "./MembersTable.scss";
 
 function MembersTable({ data, metadata }) {
+  console.log("data::::", data);
   const { members } = data;
   const { headers } = metadata;
 
@@ -20,8 +21,8 @@ function MembersTable({ data, metadata }) {
                 <td>{member.title}</td>
                 <td>{member.first_name}</td>
                 <td>{member.last_name}</td>
-                <td>{member.gender}</td>
                 <td>{member.party}</td>
+                <td>{member.gender}</td>
               </tr>
             ))}
         </tbody>
