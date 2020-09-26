@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import "./MembersTable.scss";
 
 function MembersTable({ data, metadata, loading }) {
+  const [isAdvanced, setIsAdvanced] = useState(false);
   const { headers } = metadata;
-
-  //console.log("data:::", data);
 
   if (loading) return <div>Loading members...</div>;
 
@@ -13,7 +12,14 @@ function MembersTable({ data, metadata, loading }) {
       <table>
         <tbody>
           <tr className="header">
-            {headers && headers.map((header) => <th key={header}>{header}</th>)}
+            {headers &&
+              headers.map((header) => (
+                <th key={header}>
+                  <input type="text" />
+                  <br />
+                  {header}
+                </th>
+              ))}
           </tr>
           {data &&
             data.map((member) => (

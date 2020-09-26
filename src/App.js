@@ -5,14 +5,15 @@ import SearchPanel from "./components/SearchPanel/SearchPanel";
 import MembersTable from "./components/MembersTable/MembersTable";
 import Footer from "./components/Footer/Footer";
 import useMembers from "./hooks/useMembers";
-//import mockedData from "./api";
+import mockedData from "./api";
 
 const metadata = {
   headers: ["title", "first name", "last name", "party", "gender"],
 };
 
 function App() {
-  const { loading, data: members } = useMembers();
+  //let { loading, data: members } = useMembers();
+  const members = mockedData.members;
   const [filteredData, setFilteredData] = useState([]);
   const [term, setTerm] = useState("");
 
@@ -43,11 +44,7 @@ function App() {
       <header className="App-header">
         <Header />
         <SearchPanel term={term} handleUpdate={onHandleUpdate} />
-        <MembersTable
-          data={filteredData}
-          metadata={metadata}
-          loading={loading}
-        />
+        <MembersTable data={filteredData} metadata={metadata} loading={false} />
         <Footer />
       </header>
     </div>
