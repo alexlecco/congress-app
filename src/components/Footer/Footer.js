@@ -2,7 +2,7 @@ import React from "react";
 import "./Footer.scss";
 
 function Footer() {
-  return <div className="FooterContainer">Footer</div>;
+  return <div className="FooterContainer">Copyright 2020</div>;
 }
 
 export default Footer;
