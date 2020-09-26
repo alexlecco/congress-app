@@ -8,13 +8,11 @@ function MembersTable({
   loading,
   showAdvancedFields,
   byTitleTerm,
-  byFirstNameTerm,
-  byLastNameTerm,
+  byNameTerm,
   byPartyTerm,
   byGenderTerm,
   handleUpdateTitle,
-  handleUpdateFirstName,
-  handleUpdateLastName,
+  handleUpdateName,
   handleUpdateParty,
   handleUpdateGender,
 }) {
@@ -25,10 +23,8 @@ function MembersTable({
   const getTermValue = (header) => {
     return header === "title"
       ? byTitleTerm
-      : header === "first name"
-      ? byFirstNameTerm
-      : header === "last name"
-      ? byLastNameTerm
+      : header === "name"
+      ? byNameTerm
       : header === "party"
       ? byPartyTerm
       : byGenderTerm;
@@ -37,56 +33,63 @@ function MembersTable({
   const getFilterFunction = (header) => {
     return header === "title"
       ? handleUpdateTitle
-      : header === "first name"
-      ? handleUpdateFirstName
-      : header === "last name"
-      ? handleUpdateLastName
+      : header === "name"
+      ? handleUpdateName
       : header === "party"
       ? handleUpdateParty
       : handleUpdateGender;
   };
 
+  const getHeaderTitle = (header) =>
+    showAdvancedFields ? `filter by ${header}` : "header";
+
+  const buildTableHeader = () => (
+    <tr className="header">
+      {headers &&
+        headers.map((header) => (
+          <th className="header__cell" key={header}>
+            {showAdvancedFields && (
+              <>
+                <input
+                  type="text"
+                  value={getTermValue(header)}
+                  onChange={getFilterFunction(header)}
+                />
+                <br />
+              </>
+            )}
+            {getHeaderTitle(header)}
+          </th>
+        ))}
+    </tr>
+  );
+
+  const buildTableBody = () =>
+    data &&
+    data.map((member) => (
+      <tr key={member.id} className="row">
+        <td>
+          <Link
+            to={{
+              pathname: `/members/${member.id}`,
+              state: { member },
+            }}
+          >
+            {`${member.first_name} ${member.last_name}`}
+          </Link>
+        </td>
+        <td>{member.title}</td>
+        <td>{member.party}</td>
+        <td>{member.gender}</td>
+      </tr>
+    ));
+
   return (
     <div className="tableContainer">
-      <table>
+      <table className="table">
         <tbody>
-          <tr className="header">
-            {headers &&
-              headers.map((header) => (
-                <th key={header}>
-                  {showAdvancedFields && (
-                    <>
-                      <input
-                        type="text"
-                        value={getTermValue(header)}
-                        onChange={getFilterFunction(header)}
-                      />
-                      <br />
-                    </>
-                  )}
-                  {header}
-                </th>
-              ))}
-          </tr>
-          {data &&
-            data.map((member) => (
-              <tr key={member.id} className="row">
-                <td>{member.title}</td>
-                <td>
-                  <Link
-                    to={{
-                      pathname: `/members/${member.id}`,
-                      state: { member },
-                    }}
-                  >
-                    {member.first_name}
-                  </Link>
-                </td>
-                <td>{member.last_name}</td>
-                <td>{member.party}</td>
-                <td>{member.gender}</td>
-              </tr>
-            ))}
+          {buildTableHeader()}
+          {buildTableBody()}
         </tbody>
       </table>
     </div>

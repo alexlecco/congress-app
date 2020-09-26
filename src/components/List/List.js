@@ -6,7 +6,7 @@ import MembersTable from "../MembersTable/MembersTable";
 import useMembers from "../../hooks/useMembers";
 
 const metadata = {
-  headers: ["title", "first name", "last name", "party", "gender"],
+  headers: ["name", "title", "party", "gender"],
 };
 
 function List() {
@@ -16,8 +16,7 @@ function List() {
   const [filteredData, setFilteredData] = useState([]);
   const [term, setTerm] = useState("");
   const [byTitleTerm, setByTitleTerm] = useState("");
-  const [byFirstNameTerm, setByFirstNameTerm] = useState("");
-  const [byLastNameTerm, setByLastNameTerm] = useState("");
+  const [byNameTerm, setByNameTerm] = useState("");
   const [byPartyTerm, setByPartyTerm] = useState("");
   const [byGenderTerm, setByGenderTerm] = useState("");
   const [advancedSearchActive, setAdvancedSearchActive] = useState(false);
@@ -32,14 +31,9 @@ function List() {
     setByTitleTerm(e.target.value);
   };
 
-  const onHandleUpdateFirstName = (e) => {
+  const onHandleUpdateName = (e) => {
     e.preventDefault();
-    setByFirstNameTerm(e.target.value);
-  };
-
-  const onHandleUpdateLastName = (e) => {
-    e.preventDefault();
-    setByLastNameTerm(e.target.value);
+    setByNameTerm(e.target.value);
   };
 
   const onHandleUpdateParty = (e) => {
@@ -58,9 +52,9 @@ function List() {
 
       const filtered = members.filter((member) => {
         return (
-          member.title.toLowerCase().includes(term.toLowerCase()) ||
           member.first_name.toLowerCase().includes(term.toLowerCase()) ||
           member.last_name.toLowerCase().includes(term.toLowerCase()) ||
+          member.title.toLowerCase().includes(term.toLowerCase()) ||
           member.party.toLowerCase().includes(term.toLowerCase()) ||
           member.gender.toLowerCase().includes(term.toLowerCase())
         );
@@ -79,25 +73,14 @@ function List() {
       setFilteredData([...filtered]);
     };
 
-    const filterListByFirstName = () => {
-      if (byFirstNameTerm === "") return members;
+    const filterListByName = () => {
+      if (byNameTerm === "") return members;
 
       const filtered = members.filter((member) => {
-        return member.first_name
-          .toLowerCase()
-          .includes(byFirstNameTerm.toLowerCase());
-      });
-
-      setFilteredData([...filtered]);
-    };
-
-    const filterListByLastName = () => {
-      if (byLastNameTerm === "") return members;
-
-      const filtered = members.filter((member) => {
-        return member.last_name
-          .toLowerCase()
-          .includes(byLastNameTerm.toLowerCase());
+        return (
+          member.first_name.toLowerCase().includes(byNameTerm.toLowerCase()) ||
+          member.last_name.toLowerCase().includes(byNameTerm.toLowerCase())
+        );
       });
 
       setFilteredData([...filtered]);
@@ -124,30 +107,20 @@ function List() {
     };
 
     filterList();
-    filterListByFirstName();
+    filterListByName();
     filterListByTitle();
-    filterListByLastName();
     filterListByParty();
     filterListByGender();
 
     if (
       term === "" &&
       byTitleTerm === "" &&
-      byFirstNameTerm === "" &&
-      byLastNameTerm === "" &&
+      byNameTerm === "" &&
       byPartyTerm === "" &&
       byGenderTerm === ""
     )
       setFilteredData([...members]);
-  }, [
-    term,
-    members,
-    byTitleTerm,
-    byFirstNameTerm,
-    byLastNameTerm,
-    byPartyTerm,
-    byGenderTerm,
-  ]);
+  }, [term, members, byTitleTerm, byNameTerm, byPartyTerm, byGenderTerm]);
 
   const onHandleCheck = (prevAdvancedSearchActive) => {
     setAdvancedSearchActive(
@@ -169,13 +142,11 @@ function List() {
         loading={loading}
         showAdvancedFields={advancedSearchActive}
         byTitleTerm={byTitleTerm}
-        byFirstNameTerm={byFirstNameTerm}
-        byLastNameTerm={byLastNameTerm}
+        byNameTerm={byNameTerm}
         byPartyTerm={byPartyTerm}
         byGenderTerm={byGenderTerm}
+        handleUpdateName={onHandleUpdateName}
         handleUpdateTitle={onHandleUpdateTitle}
-        handleUpdateFirstName={onHandleUpdateFirstName}
-        handleUpdateLastName={onHandleUpdateLastName}
         handleUpdateParty={onHandleUpdateParty}
         handleUpdateGender={onHandleUpdateGender}
       />

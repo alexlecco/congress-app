@@ -2,7 +2,24 @@
   position: absolute;
   top: 150px;
   overflow-y: scroll;
-  height: 64vh;
+  max-height: 64vh;
+}
+
+.table {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table td,
+.table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.table tr:hover {
+  background-color: #a6e22e;
+  color: #fff;
 }
 
 .header {
@@ -11,6 +28,10 @@
   &__title {
     display: flex;
     flex-direction: column;
+  }
+
+  &__cell {
+    width: 240px;
   }
 }
 
