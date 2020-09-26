@@ -1,0 +1,10 @@
+.memberDetailsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: flex-start;
+
+  &__rightPanel {
+    margin-left: 100px;
+  }
+}

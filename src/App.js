@@ -1,26 +1,32 @@
 import React from "react";
 import "./App.scss";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  //useParams,
+} from "react-router-dom";
 import Header from "./components/Header/Header";
-import List from "./components/Main/List";
+import List from "./components/List/List";
+import MemberDetails from "./components/MemberDetails/MemberDetails";
 import Footer from "./components/Footer/Footer";
-//import useMembers from "./hooks/useMembers";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Router>
+    <Router>
+      <div className="App">
+        <header className="App-header">
           <Header />
           <Switch>
-            <Route path="/">
+            <Route exact path="/">
               <List />
             </Route>
+            <Route path="/members/:id" component={MemberDetails}></Route>
           </Switch>
           <Footer />
-        </Router>
-      </header>
-    </div>
+        </header>
+      </div>
+    </Router>
   );
 }
 

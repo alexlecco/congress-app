@@ -2,15 +2,16 @@ import React, { useState, useEffect } from "react";
 import "./List.scss";
 import SearchPanel from "../SearchPanel/SearchPanel";
 import MembersTable from "../MembersTable/MembersTable";
-import mockedData from "../../api";
+//import mockedData from "../../api";
+import useMembers from "../../hooks/useMembers";
 
 const metadata = {
   headers: ["title", "first name", "last name", "party", "gender"],
 };
 
 function List() {
-  //let { loading, data: members } = useMembers();
-  const members = mockedData.members;
+  let { loading, data: members } = useMembers();
+  //const members = mockedData.members;
 
   const [filteredData, setFilteredData] = useState([]);
   const [term, setTerm] = useState("");
@@ -165,7 +166,7 @@ function List() {
       <MembersTable
         data={filteredData}
         metadata={metadata}
-        loading={false} // update
+        loading={loading}
         showAdvancedFields={advancedSearchActive}
         byTitleTerm={byTitleTerm}
         byFirstNameTerm={byFirstNameTerm}

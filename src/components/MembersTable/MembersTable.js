@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./MembersTable.scss";
 
 function MembersTable({
@@ -71,7 +72,16 @@ function MembersTable({
             data.map((member) => (
               <tr key={member.id} className="row">
                 <td>{member.title}</td>
-                <td>{member.first_name}</td>
+                <td>
+                  <Link
+                    to={{
+                      pathname: `/members/${member.id}`,
+                      state: { member },
+                    }}
+                  >
+                    {member.first_name}
+                  </Link>
+                </td>
                 <td>{member.last_name}</td>
                 <td>{member.party}</td>
                 <td>{member.gender}</td>
