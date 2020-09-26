@@ -15,7 +15,7 @@ function SearchPanel({ term, handleUpdate, isChecked, handleCheck }) {
         <div className="switchContainer">
           <p className="switchLabel">Advanced Search</p>
           <label className="switch">
-            <input type="checkbox" checked={isChecked} onClick={handleCheck} />
+            <input type="checkbox" checked={isChecked} onChange={handleCheck} />
             <span className="slider round"></span>
           </label>
         </div>
