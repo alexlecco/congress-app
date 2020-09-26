@@ -1,12 +1,12 @@
 import React from "react";
 import "./MembersTable.scss";
 
-function MembersTable({ data, metadata }) {
-  console.log("data::::", data);
-  const { members } = data;
+function MembersTable({ data, metadata, loading }) {
   const { headers } = metadata;
 
-  if (!members) return <div>Loading...</div>;
+  //console.log("data:::", data);
+
+  if (loading) return <div>Loading members...</div>;
 
   return (
     <div className="tableContainer">
@@ -15,8 +15,8 @@ function MembersTable({ data, metadata }) {
           <tr className="header">
             {headers && headers.map((header) => <th key={header}>{header}</th>)}
           </tr>
-          {members &&
-            members.map((member) => (
+          {data &&
+            data.map((member) => (
               <tr key={member.id} className="row">
                 <td>{member.title}</td>
                 <td>{member.first_name}</td>

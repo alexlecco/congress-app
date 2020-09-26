@@ -1,45 +1,53 @@
 import React, { useState, useEffect } from "react";
 import "./App.scss";
-import axios from "./axios";
 import Header from "./components/Header/Header";
 import SearchPanel from "./components/SearchPanel/SearchPanel";
 import MembersTable from "./components/MembersTable/MembersTable";
 import Footer from "./components/Footer/Footer";
-import mockedData from "./api";
+import useMembers from "./hooks/useMembers";
+//import mockedData from "./api";
 
 const metadata = {
-  headers: ["title", "first_name", "last_name", "party", "gender"],
+  headers: ["title", "first name", "last name", "party", "gender"],
 };
 
 function App() {
-  const [data, setData] = useState([]);
+  const { loading, data: members } = useMembers();
+  const [filteredData, setFilteredData] = useState([]);
+  const [term, setTerm] = useState("");
+
+  const onHandleUpdate = (e) => {
+    setTerm(e.target.value);
+  };
 
   useEffect(() => {
-    function fetchMembers() {
-      axios
-        .request({
-          url: "https://api.propublica.org/congress/v1/116/senate/members.json",
-          headers: { "X-API-Key": "xN4CkJlmc1wGqVJsgPM5fywbvqYygAVRvQCdKRMy" },
-          method: "get",
-        })
-        .then((response) => {
-          const members = response.data.results[0];
-          setData(members);
-        })
-        .catch((error) => {
-          console.log("ERROR: ", error);
-        });
-    }
+    const filterList = () => {
+      if (term === "" || term.length < 3) return members;
 
-    fetchMembers();
-  }, []);
+      return members.filter((member) => {
+        return (
+          member.title.toLowerCase().includes(term.toLowerCase()) ||
+          member.first_name.toLowerCase().includes(term.toLowerCase()) ||
+          member.last_name.toLowerCase().includes(term.toLowerCase()) ||
+          member.party.toLowerCase().includes(term.toLowerCase()) ||
+          member.gender.toLowerCase().includes(term.toLowerCase())
+        );
+      });
+    };
+
+    setFilteredData([...filterList()]);
+  }, [term, members]);
 
   return (
     <div className="App">
       <header className="App-header">
         <Header />
-        <SearchPanel />
-        <MembersTable data={data} metadata={metadata} />
+        <SearchPanel term={term} handleUpdate={onHandleUpdate} />
+        <MembersTable
+          data={filteredData}
+          metadata={metadata}
+          loading={loading}
+        />
         <Footer />
       </header>
     </div>
