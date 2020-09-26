@@ -1,6 +1,8 @@
 .tableContainer {
   position: absolute;
   top: 100px;
+  overflow-y: scroll;
+  height: 68vh;
 }
 
 .header {
