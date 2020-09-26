@@ -4,7 +4,7 @@ import Header from "./components/Header/Header";
 import SearchPanel from "./components/SearchPanel/SearchPanel";
 import MembersTable from "./components/MembersTable/MembersTable";
 import Footer from "./components/Footer/Footer";
-import useMembers from "./hooks/useMembers";
+//import useMembers from "./hooks/useMembers";
 import mockedData from "./api";
 
 const metadata = {
@@ -16,6 +16,7 @@ function App() {
   const members = mockedData.members;
   const [filteredData, setFilteredData] = useState([]);
   const [term, setTerm] = useState("");
+  const [advancedSearchActive, setAdvancedSearchActive] = useState(false);
 
   const onHandleUpdate = (e) => {
     setTerm(e.target.value);
@@ -39,12 +40,28 @@ function App() {
     setFilteredData([...filterList()]);
   }, [term, members]);
 
+  const onHandleCheck = (prevAdvancedSearchActive) => {
+    setAdvancedSearchActive(
+      (prevAdvancedSearchActive) => !prevAdvancedSearchActive
+    );
+  };
+
   return (
     <div className="App">
       <header className="App-header">
         <Header />
-        <SearchPanel term={term} handleUpdate={onHandleUpdate} />
-        <MembersTable data={filteredData} metadata={metadata} loading={false} />
+        <SearchPanel
+          term={term}
+          handleUpdate={onHandleUpdate}
+          isChecked={advancedSearchActive}
+          handleCheck={onHandleCheck}
+        />
+        <MembersTable
+          data={filteredData}
+          metadata={metadata}
+          loading={false}
+          showAdvancedFields={advancedSearchActive}
+        />
         <Footer />
       </header>
     </div>
