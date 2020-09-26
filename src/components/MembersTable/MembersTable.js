@@ -1,10 +1,49 @@
 import React from "react";
 import "./MembersTable.scss";
 
-function MembersTable({ data, metadata, loading, showAdvancedFields }) {
+function MembersTable({
+  data,
+  metadata,
+  loading,
+  showAdvancedFields,
+  byTitleTerm,
+  byFirstNameTerm,
+  byLastNameTerm,
+  byPartyTerm,
+  byGenderTerm,
+  handleUpdateTitle,
+  handleUpdateFirstName,
+  handleUpdateLastName,
+  handleUpdateParty,
+  handleUpdateGender,
+}) {
   const { headers } = metadata;
 
   if (loading) return <div>Loading members...</div>;
+
+  const getTermValue = (header) => {
+    return header === "title"
+      ? byTitleTerm
+      : header === "first name"
+      ? byFirstNameTerm
+      : header === "last name"
+      ? byLastNameTerm
+      : header === "party"
+      ? byPartyTerm
+      : byGenderTerm;
+  };
+
+  const getFilterFunction = (header) => {
+    return header === "title"
+      ? handleUpdateTitle
+      : header === "first name"
+      ? handleUpdateFirstName
+      : header === "last name"
+      ? handleUpdateLastName
+      : header === "party"
+      ? handleUpdateParty
+      : handleUpdateGender;
+  };
 
   return (
     <div className="tableContainer">
@@ -16,7 +55,11 @@ function MembersTable({ data, metadata, loading, showAdvancedFields }) {
                 <th key={header}>
                   {showAdvancedFields && (
                     <>
-                      <input type="text" />
+                      <input
+                        type="text"
+                        value={getTermValue(header)}
+                        onChange={getFilterFunction(header)}
+                      />
                       <br />
                     </>
                   )}

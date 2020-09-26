@@ -10,7 +10,7 @@ const data = {
     },
     {
       id: "2",
-      title: "Senator, 2nd Class",
+      title: "Gobernor, 2nd Class",
       first_name: "Alex",
       last_name: "villecco",
       party: "4",
@@ -34,7 +34,7 @@ const data = {
     },
     {
       id: "5",
-      title: "Senator, 2nd Class",
+      title: "Gobernor, 2nd Class",
       first_name: "22222",
       last_name: "33333",
       party: "4",
@@ -58,7 +58,7 @@ const data = {
     },
     {
       id: "8",
-      title: "Senator, 1nd Class",
+      title: "Gobernor, 1nd Class",
       first_name: "22222",
       last_name: "33333",
       party: "4",
@@ -74,7 +74,7 @@ const data = {
     },
     {
       id: "10",
-      title: "Senator, 4nd Class",
+      title: "Gobernor, 4nd Class",
       first_name: "22222",
       last_name: "33333",
       party: "4",
@@ -98,7 +98,7 @@ const data = {
     },
     {
       id: "13",
-      title: "Senator, 3nd Class",
+      title: "Gobernor, 3nd Class",
       first_name: "22222",
       last_name: "33333",
       party: "4",
@@ -122,7 +122,7 @@ const data = {
     },
     {
       id: "16",
-      title: "Senator, 2nd Class",
+      title: "Gobernor, 2nd Class",
       first_name: "22222",
       last_name: "33333",
       party: "4",
