@@ -1,10 +1,15 @@
 @import "../../constants/colors.scss";
+@import "../../constants/dimensions.scss";
 
 .tableContainer {
   position: absolute;
   top: 150px;
-  overflow-y: scroll;
-  max-height: 65%;
+  overflow: scroll;
+  max-height: 60vh;
+
+  @media (max-width: $sm) {
+    top: 180px;
+  }
 }
 
 .table {

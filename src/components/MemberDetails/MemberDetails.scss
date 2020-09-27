@@ -1,19 +1,17 @@
 @import "../../constants/colors.scss";
 @import "../../constants/dimensions.scss";
 
-$small-screen: 576px;
-
 .memberDetailsContainer {
-  background-color: $background;
-  min-height: 100vh;
+  background-color: #282c34;
+  min-height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: $text;
-  position: relative;
-  margin-top: 70px;
+  color: #ffffff;
+  margin-top: 10vh;
+  padding-top: 20px;
 }
 
 .memberCard {
