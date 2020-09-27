@@ -19,8 +19,8 @@ function MemberDetails() {
           <p>state: {member.state}</p>
           <p>gender: {member.gender}</p>
         </div>
-        <div className="memberCard__panel-right">
-          <p>twitter account: {member.twitter_account}</p>
+        <div className="memberCard__panel">
+          <p>twitter account: @{member.twitter_account}</p>
           <p>facebook account: {member.facebook_account}</p>
           <p>youtube account: {member.youtube_account}</p>
           <p>phone: {member.phone}</p>

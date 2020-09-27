@@ -1,3 +1,5 @@
+@import "../../constants/colors.scss";
+
 .searchPanelContainer {
   position: absolute;
   top: 80px;
@@ -55,7 +57,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: $gray;
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
@@ -67,17 +69,17 @@
   width: 17px;
   left: 4px;
   bottom: 4px;
-  background-color: white;
+  background-color: $text;
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
 
 input:checked + .slider {
-  background-color: #a6e22e;
+  background-color: $active;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #a6e22e;
+  box-shadow: 0 0 1px $active;
 }
 
 input:checked + .slider:before {

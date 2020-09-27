@@ -1,8 +1,10 @@
+@import "../../constants/colors.scss";
+
 .tableContainer {
   position: absolute;
   top: 150px;
   overflow-y: scroll;
-  max-height: 64vh;
+  max-height: 65%;
 }
 
 .table {
@@ -18,12 +20,12 @@
 }
 
 .table tr:hover {
-  background-color: #a6e22e;
-  color: #fff;
+  background-color: $active;
+  color: $text;
 }
 
 .header {
-  background-color: #66d9ef;
+  background-color: $secondary;
 
   &__title {
     display: flex;
@@ -36,6 +38,6 @@
 }
 
 .row {
-  background-color: #fff;
-  color: #000;
+  background-color: $text;
+  color: $background;
 }
