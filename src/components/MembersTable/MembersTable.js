@@ -1,99 +1,147 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./MembersTable.scss";
 
-function MembersTable({
-  data,
-  metadata,
-  loading,
-  showAdvancedFields,
-  byTitleTerm,
-  byNameTerm,
-  byPartyTerm,
-  byGenderTerm,
-  handleUpdateTitle,
-  handleUpdateName,
-  handleUpdateParty,
-  handleUpdateGender,
-}) {
-  const { headers } = metadata;
+const MembersTable = ({ data, filterData, showFilterByColumns = false }) => {
+  const [filterByColumn, setFilterByColumn] = useState({});
 
-  if (loading) return <div>Loading members...</div>;
+  const renderHeader = () => {
+    let headerNames = Object.keys(data.headers);
 
-  const getTermValue = (header) => {
-    return header === "title"
-      ? byTitleTerm
-      : header === "name"
-      ? byNameTerm
-      : header === "party"
-      ? byPartyTerm
-      : byGenderTerm;
-  };
-
-  const getFilterFunction = (header) => {
-    return header === "title"
-      ? handleUpdateTitle
-      : header === "name"
-      ? handleUpdateName
-      : header === "party"
-      ? handleUpdateParty
-      : handleUpdateGender;
+    return (
+      <thead>
+        <tr className="header">
+          {headerNames.map((header) => (
+            <th key={header} className="header__cell">
+              <div className="header__cell-style">
+                {getHeaderTitle(data.headers[header].label)}
+                {showFilterByColumns &&
+                  renderColumnFilter(header, data.headers[header])}
+              </div>
+            </th>
+          ))}
+        </tr>
+      </thead>
+    );
   };
 
   const getHeaderTitle = (header) =>
-    showAdvancedFields ? `filter by ${header}` : header;
+    showFilterByColumns ? `filter by ${header}` : header;
 
-  const buildTableHeader = () => (
-    <tr className="header">
-      {headers &&
-        headers.map((header) => (
-          <th className="header__cell" key={header}>
-            {showAdvancedFields && (
-              <>
-                <input
-                  type="text"
-                  value={getTermValue(header)}
-                  onChange={getFilterFunction(header)}
-                />
-                <br />
-              </>
-            )}
-            {getHeaderTitle(header)}
-          </th>
-        ))}
-    </tr>
+  const renderColumnFilter = (name, headerData) => {
+    switch (headerData.filterType) {
+      case "select":
+        return (
+          <select
+            name={name}
+            value={filterByColumn[name] || ""}
+            onChange={handleFilterColumn}
+          >
+            <option></option>
+            {headerData.filterOptions.map((option) => {
+              return <option key={option}>{option}</option>;
+            })}
+          </select>
+        );
+      default:
+        return (
+          <input
+            autoComplete="off"
+            name={name}
+            value={filterByColumn[name] || ""}
+            onChange={handleFilterColumn}
+            type="search"
+          />
+        );
+    }
+  };
+
+  const handleFilterColumn = (e) => {
+    let value = {};
+    value[e.target.name] = e.target.value;
+    setFilterByColumn({ ...filterByColumn, ...value });
+  };
+
+  const renderRows = () => (
+    <tbody>
+      {filteredData().map((row) => {
+        let headerNames = Object.keys(row);
+        let ignoreColumnNames = ["_id", "_url", "_meta"];
+
+        return (
+          <tr key={row._id} className="row">
+            {headerNames.map((cellKey) => {
+              return !ignoreColumnNames.includes(cellKey) ? (
+                <td key={`${row._id}-${cellKey}`}>
+                  <Link
+                    to={{
+                      pathname: `/members/${row._id}`,
+                      state: { member: row._meta },
+                    }}
+                  >
+                    {row[cellKey]}
+                  </Link>
+                </td>
+              ) : null;
+            })}
+          </tr>
+        );
+      })}
+    </tbody>
   );
 
-  const buildTableBody = () =>
-    data &&
-    data.map((member) => (
-      <tr key={member.id} className="row">
-        <td>
-          <Link
-            to={{
-              pathname: `/members/${member.id}`,
-              state: { member },
-            }}
-          >
-            {`${member.first_name} ${member.last_name}`}
-          </Link>
-        </td>
-        <td>{member.title}</td>
-        <td>{member.party}</td>
-        <td>{member.gender}</td>
-      </tr>
-    ));
+  const filteredData = () => {
+    return data.rows.filter((row) => {
+      let rowToString = Object.values(row).join("").toLowerCase();
+      let globalCondition =
+        filterData !== null && rowToString.includes(filterData.toLowerCase());
+      let columnCondition = Object.keys(filterByColumn).map((colName) => {
+        if (
+          filterByColumn[colName] &&
+          row[colName] &&
+          filterColumn(
+            data.headers[colName].filterType,
+            row[colName],
+            filterByColumn[colName]
+          )
+        ) {
+          return true;
+        } else if (!filterByColumn[colName]) {
+          // Cuando el usuario borra los valores
+          return true;
+        } else {
+          // Se filtró por esta columna pero no hay match
+          return false;
+        }
+      });
+
+      // Devolver la data filtrada
+      return (
+        globalCondition &&
+        columnCondition.reduce((a, b) => {
+          return a && b;
+        }, 1)
+      );
+    });
+  };
+
+  const filterColumn = (type, data, filterValue) => {
+    switch (type) {
+      case "select":
+        return data === filterValue;
+      default:
+        return data.toLowerCase().includes(filterValue.toLowerCase());
+    }
+  };
 
   return (
     <div className="tableContainer">
       <table className="table">
-        <tbody>
-          {buildTableHeader()}
-          {buildTableBody()}
-        </tbody>
+        {renderHeader()}
+        {renderRows()}
       </table>
     </div>
   );
-}
+};
 
 export default MembersTable;

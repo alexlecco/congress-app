@@ -47,6 +47,11 @@
 
   &__cell {
     width: 240px;
+
+    &-style {
+      display: flex;
+      flex-direction: column;
+    }
   }
 }
 
