@@ -9,7 +9,7 @@ function SearchPanel({ term, handleUpdate, isChecked, handleCheck }) {
           <div className="search__left-label">Search</div>
           <input
             className="search__left-input"
-            type="text"
+            type="search"
             value={term}
             onChange={handleUpdate}
           />

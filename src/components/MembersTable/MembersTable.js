@@ -36,8 +36,9 @@ const MembersTable = ({ data, filterData, showFilterByColumns = false }) => {
             name={name}
             value={filterByColumn[name] || ""}
             onChange={handleFilterColumn}
+            className="select"
           >
-            <option></option>
+            <option value="">All</option>
             {headerData.filterOptions.map((option) => {
               return <option key={option}>{option}</option>;
             })}

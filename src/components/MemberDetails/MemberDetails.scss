@@ -2,14 +2,14 @@
 @import "../../constants/dimensions.scss";
 
 .memberDetailsContainer {
-  background-color: #282c34;
+  background-color: $background;
   min-height: 90vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: #ffffff;
+  color: $text;
   margin: 10vh 0;
   padding-top: 20px;
 }

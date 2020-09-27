@@ -73,7 +73,7 @@ function List() {
         handleCheck={onHandleCheck}
       />
       {loading ? (
-        "Cargando miembros..."
+        "Loading members..."
       ) : (
         <MembersTable
           data={dataTable}
