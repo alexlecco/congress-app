@@ -7,11 +7,7 @@ const useMembers = () => {
 
   const fetchMembers = async () => {
     axios
-      .request({
-        url: "https://api.propublica.org/congress/v1/116/senate/members.json",
-        headers: { "X-API-Key": "xN4CkJlmc1wGqVJsgPM5fywbvqYygAVRvQCdKRMy" },
-        method: "get",
-      })
+      .get("/congress/v1/116/senate/members.json")
       .then((response) => {
         const members = response.data.results[0];
         setData([...members.members]);

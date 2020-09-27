@@ -41,7 +41,7 @@ function MembersTable({
   };
 
   const getHeaderTitle = (header) =>
-    showAdvancedFields ? `filter by ${header}` : "header";
+    showAdvancedFields ? `filter by ${header}` : header;
 
   const buildTableHeader = () => (
     <tr className="header">
