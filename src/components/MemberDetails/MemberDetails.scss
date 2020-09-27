@@ -10,7 +10,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: #ffffff;
-  margin-top: 10vh;
+  margin-top: 4vh;
   padding-top: 20px;
 }
 
@@ -45,4 +45,10 @@
       text-align: left;
     }
   }
+}
+
+.backButton {
+  margin-right: auto;
+  padding-left: 6%;
+  color: $active;
 }

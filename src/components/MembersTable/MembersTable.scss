@@ -7,8 +7,16 @@
   overflow: scroll;
   max-height: 60vh;
 
+  @media (max-width: $md) {
+    top: 180px;
+    max-height: 55vh;
+    width: 90vh;
+  }
+
   @media (max-width: $sm) {
     top: 180px;
+    max-height: 55vh;
+    width: 50vh;
   }
 }
 

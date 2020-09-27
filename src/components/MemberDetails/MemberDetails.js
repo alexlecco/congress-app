@@ -1,6 +1,6 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
 import "./MemberDetails.scss";
+import { useLocation, Link } from "react-router-dom";
 
 function MemberDetails() {
   const { state } = useLocation();
@@ -10,6 +10,9 @@ function MemberDetails() {
 
   return (
     <div className="memberDetailsContainer">
+      <Link to={"/"} className="backButton">
+        Back
+      </Link>
       <div>{getFullName()}</div>
       <div className="memberCard">
         <div className="memberCard__panel">
